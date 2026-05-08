@@ -18,12 +18,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `flywheel/training_trigger.py` — LoRA fine-tuning with curriculum triggers
 - `validators/base_evaluator.py` — DEMAS framework with Provenance Matrix
 - 4-layer isolation architecture (tenant, prompt, task, KV cache)
-- Comprehensive test suite (36 tests)
+- Comprehensive test suite (36 tests, 100% pass)
 - GitHub Actions CI with lint, type-check, test, and security scan
+- Public API with 15 typed exports via `__init__.py`
+- `py.typed` marker (PEP 561) for downstream type checking
+- Full documentation (`docs/architecture.md`, `docs/data_flywheel.md`, `docs/evaluation_methodology.md`)
+- Community standards: CODE_OF_CONDUCT.md, CONTRIBUTING.md, SECURITY.md, ROADMAP.md
+- Structured issue templates (bug report, feature request) with pipeline-specific fields
+- Pull request template enforcing Gate-Agent and fail-closed checklist
 
 ### Removed
 - All proprietary references (company names, client data, internal secrets)
 - Vendor-specific infrastructure bindings (graceful degradation)
+
+### Fixed
+- Node 5 expanded from stub to full Gate-Agent with constraint validation
+- Removed unused `_entry_hash` private field from StoreContext
+- Removed unused `datetime`/`timezone` and `field` imports
+- Corrected README project structure (tests at root level)
 
 ## Model Migration History
 

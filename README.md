@@ -150,6 +150,13 @@ tests/
 - **[Pipeline Observatory](https://manzela.github.io/pipeline-observatory/)** — Live execution telemetry
 - **[Architecture Deep View](https://manzela.github.io/pipeline-observatory/architecture.html)** — Mechanistic interpretability
 
+## Roadmap
+
+See [ROADMAP.md](ROADMAP.md) for the full development roadmap, including:
+- **v3.1** — Production Langfuse integration, pluggable evaluators, S-LoRA hot-reload
+- **v3.2** — Multi-model consensus scoring, active learning, drift detection
+- **v4.0** — Fully autonomous self-improvement with closed-loop retraining
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and workflow.
