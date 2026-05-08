@@ -130,8 +130,10 @@ agent_dag/
 ├── shared/
 │   ├── data_contracts.py              # Pydantic models (all frozen)
 │   └── observability.py               # Structured tracing + score emission
-└── tests/
-    └── test_pipeline.py               # 36 tests covering all critical paths
+│
+tests/
+├── conftest.py                        # Shared test fixtures
+└── test_pipeline.py                   # 36 tests covering all critical paths
 ```
 
 ## Model Evolution
@@ -147,6 +149,11 @@ agent_dag/
 
 - **[Pipeline Observatory](https://manzela.github.io/pipeline-observatory/)** — Live execution telemetry
 - **[Architecture Deep View](https://manzela.github.io/pipeline-observatory/architecture.html)** — Mechanistic interpretability
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and workflow.
+This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 

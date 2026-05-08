@@ -1,0 +1,82 @@
+name: Bug Report
+description: Report a bug in the Agent DAG Pipeline
+title: "[BUG] "
+labels: ["type: bug", "status: triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please fill out the sections below.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of the bug.
+      placeholder: "When I run the pipeline with X, I expect Y but get Z."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Minimal steps to reproduce the behavior.
+      value: |
+        1. Configure `StoreContext` with ...
+        2. Call `run_pipeline(product, store_context)`
+        3. Observe error at ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should have happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened? Include error messages and tracebacks.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: node
+    attributes:
+      label: Pipeline Node
+      description: Which node is affected?
+      options:
+        - "Node 1 — Context Researcher"
+        - "Node 2 — Input Normalizer"
+        - "Node 3 — Synonym Generator"
+        - "Node 4 — Demand Gatekeeper"
+        - "Node 5 — Content Generator"
+        - "Node 6 — Quality Validator"
+        - "Node 7 — Metadata Extractor"
+        - "Orchestrator"
+        - "Flywheel"
+        - "Other / Unknown"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: "Output of `python -c 'from agent_dag import __version__; print(__version__)'`"
+      placeholder: "3.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: python
+    attributes:
+      label: Python Version
+      placeholder: "3.11.8"
+    validations:
+      required: true

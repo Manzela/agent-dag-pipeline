@@ -13,6 +13,7 @@ jobs:
   lint-and-type-check:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.11", "3.12", "3.13"]
 
@@ -23,6 +24,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+          cache: "pip"
 
       - name: Install dependencies
         run: |
@@ -34,7 +36,6 @@ jobs:
 
       - name: Type check with mypy
         run: mypy agent_dag/ --ignore-missing-imports
-        continue-on-error: true
 
       - name: Run tests
         run: pytest tests/ -v --tb=short

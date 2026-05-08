@@ -23,5 +23,37 @@ See: docs/architecture.md for the full topology diagram.
 """
 
 from .__version__ import __version__
+from .orchestrator import FailureReason, FailureRecord, run_pipeline
+from .shared.data_contracts import (
+    ContentBlockOutput,
+    ContextPayload,
+    FAQItem,
+    GateDecision,
+    IntentLockOutput,
+    LinguisticContext,
+    NormalizerOutput,
+    ORAVDecision,
+    PipelineResult,
+    StoreContext,
+    SynonymOutput,
+)
 
-__all__ = ["__version__"]
+__all__ = [
+    "__version__",
+    # Orchestrator
+    "run_pipeline",
+    "FailureReason",
+    "FailureRecord",
+    # Data contracts
+    "StoreContext",
+    "LinguisticContext",
+    "NormalizerOutput",
+    "SynonymOutput",
+    "IntentLockOutput",
+    "ContentBlockOutput",
+    "FAQItem",
+    "ContextPayload",
+    "PipelineResult",
+    "GateDecision",
+    "ORAVDecision",
+]
