@@ -1,0 +1,22 @@
+{
+  "supported_locales": ["ES", "PT", "IL", "GB", "DE", "FR", "IT", "PL", "CZ"],
+  "min_search_volume": 10,
+  "orav": {
+    "originality": 0.6,
+    "relevance": 0.7,
+    "accuracy": 0.8,
+    "value": 0.6
+  },
+  "flywheel": {
+    "approved_threshold": 0.7,
+    "failure_threshold": 0.5,
+    "min_pairs_for_training": 50,
+    "min_margin_for_training": 0.2
+  },
+  "llm": {
+    "provider": "mock",
+    "model": "",
+    "api_key_env": "LLM_API_KEY"
+  },
+  "output_dir": "./output"
+}

@@ -59,6 +59,7 @@ async def run_node3(state: dict[str, Any]) -> dict[str, Any]:
     """Execute Node 3: Synonym Generator."""
     node2 = state["node2_result"]
     store = state["store_context"]
+    llm_client = state.get("llm_client")
 
     base_terms = [node2.lean_product_name]
     deduped = gate_dedup_filter(base_terms)
@@ -69,6 +70,7 @@ async def run_node3(state: dict[str, Any]) -> dict[str, Any]:
     synonyms = await agent_synonym_generation(
         node2.lean_product_name, node2.semantic_category,
         node2.target_language, store.country_code,
+        llm_client=llm_client,
     )
 
     return SynonymOutput(

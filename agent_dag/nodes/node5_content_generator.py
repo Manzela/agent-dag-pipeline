@@ -99,19 +99,26 @@ async def run_node5(state: dict[str, Any]) -> dict[str, Any]:
     """Execute Node 5: Content Generator with Gate-Agent pattern.
 
     Extracts context from upstream nodes and generates content blocks.
-    In production, each block is generated via a separate LLM call
-    with structured Pydantic output and JIT-audited by DEMAS.
+    When an LLM client is available, generates real content via the
+    provider. Otherwise, returns deterministic stubs for testing.
     """
     # ── Extract context from upstream nodes ──
     node2_result = state.get("node2_result", {})
     node4_result = state.get("node4_result", {})
     store_context = state.get("store_context")
+    llm_client = state.get("llm_client")
 
     semantic_category = ""
     if hasattr(node2_result, "semantic_category"):
         semantic_category = node2_result.semantic_category
     elif isinstance(node2_result, dict):
         semantic_category = node2_result.get("semantic_category", "")
+
+    lean_name = ""
+    if hasattr(node2_result, "lean_product_name"):
+        lean_name = node2_result.lean_product_name
+    elif isinstance(node2_result, dict):
+        lean_name = node2_result.get("lean_product_name", "")
 
     # ── Step 1: Deterministic Gate ──
     if not gate_template_selector(semantic_category):
@@ -120,10 +127,31 @@ async def run_node5(state: dict[str, Any]) -> dict[str, Any]:
         )
 
     # ── Step 2: Probabilistic Agent ──
-    # In production, this generates 9+ content blocks using per-block
-    # prompts with structured Pydantic output schemas, each JIT-audited
-    # by the DEMAS evaluator framework before proceeding.
-    content = ContentBlockOutput()
+    if llm_client is not None and lean_name:
+        # Generate content using the injected LLM client
+        city = store_context.city if store_context else ""
+        language = store_context.language_name if store_context else "English"
+
+        prompt = (
+            f"Generate product content for '{lean_name}' "
+            f"(category: {semantic_category or 'general'}) "
+            f"for a store in {city}. Language: {language}. "
+            f"Include: full description, short description, "
+            f"store welcome line, meta title, meta description, "
+            f"image alt tag, key features, and FAQ items."
+        )
+
+        try:
+            content = await llm_client.generate_structured(
+                prompt,
+                ContentBlockOutput,
+                system_prompt="You are a product content specialist.",
+            )
+        except Exception as exc:
+            logger.warning("LLM generation failed, using stub: %s", exc)
+            content = ContentBlockOutput()
+    else:
+        content = ContentBlockOutput()
 
     # ── Post-generation constraint validation ──
     violations = validate_block_constraints(content)

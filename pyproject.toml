@@ -32,6 +32,8 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+openai = ["openai>=1.20"]
+google = ["google-genai>=1.0"]
 observability = [
     "langfuse>=2.40,<3",
     "opentelemetry-api>=1.20",
@@ -49,6 +51,9 @@ dev = [
     "mypy>=1.8",
     "ruff>=0.3",
 ]
+
+[project.scripts]
+agent-dag = "agent_dag.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/Manzela/agent-dag-pipeline"

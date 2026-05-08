@@ -199,6 +199,7 @@ async def run_pipeline(
     product: dict[str, Any],
     store_context: StoreContext,
     *,
+    llm_client: Optional[Any] = None,
     node_registry: Optional[dict[str, Any]] = None,
     failure_store: Optional[Any] = None,
     flywheel: Optional[Any] = None,
@@ -217,6 +218,10 @@ async def run_pipeline(
         Raw product data from the upstream data source.
     store_context : StoreContext
         Immutable store/locale context established at pipeline entry.
+    llm_client : optional
+        Injectable LLM client implementing the LLMClient protocol.
+        When None, nodes use deterministic stubs (no LLM calls).
+        See ``agent_dag.shared.llm_protocol.LLMClient`` for the interface.
     node_registry : dict, optional
         Injectable node implementations for testing. Keys are node names
         (e.g., "node1", "node2"), values are async callables.
@@ -305,6 +310,7 @@ async def run_pipeline(
     state: dict[str, Any] = {
         "product": product,
         "store_context": store_context,
+        "llm_client": llm_client,
         "node1_result": node1_result,
         "node2_result": node2_result,
     }

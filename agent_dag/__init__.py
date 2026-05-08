@@ -23,6 +23,7 @@ See: docs/architecture.md for the full topology diagram.
 """
 
 from .__version__ import __version__
+from .config import PipelineConfig, load_config
 from .orchestrator import FailureReason, FailureRecord, run_pipeline
 from .shared.data_contracts import (
     ContentBlockOutput,
@@ -38,12 +39,21 @@ from .shared.data_contracts import (
     SynonymOutput,
 )
 
+from .shared.llm_protocol import LLMClient, MockLLMClient, create_llm_client
+
 __all__ = [
     "__version__",
     # Orchestrator
     "run_pipeline",
     "FailureReason",
     "FailureRecord",
+    # LLM
+    "LLMClient",
+    "MockLLMClient",
+    "create_llm_client",
+    # Config
+    "PipelineConfig",
+    "load_config",
     # Data contracts
     "StoreContext",
     "LinguisticContext",

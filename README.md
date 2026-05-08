@@ -101,8 +101,57 @@ cd agent-dag-pipeline
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
-# Test (36 tests, 0.4s)
+# Test (36 tests, 0.03s)
 pytest tests/ -v
+```
+
+## Running the Pipeline
+
+The pipeline is **LLM-agnostic**. Bring your own provider or use the built-in mock for testing:
+
+```bash
+# Zero-config demo (mock LLM, no API key needed)
+python -m agent_dag run \
+    --products examples/data/products.json \
+    --stores examples/data/stores.json \
+    --output ./output
+
+# With OpenAI
+pip install -e ".[openai]"
+export OPENAI_API_KEY="sk-..."
+python -m agent_dag run \
+    --products data/products.json \
+    --stores data/stores.json \
+    --llm openai --model gpt-4o-mini
+
+# With Google Gemini
+pip install -e ".[google]"
+export GOOGLE_API_KEY="..."
+python -m agent_dag run \
+    --products data/products.json \
+    --stores data/stores.json \
+    --llm google --model gemini-2.5-flash-lite
+```
+
+**Output:** `output/products_per_location.json` — all results grouped by store location.
+
+### LLM Client Protocol
+
+Implement your own provider by satisfying the `LLMClient` protocol:
+
+```python
+from agent_dag import LLMClient, run_pipeline, StoreContext
+
+class MyCustomLLM:
+    async def generate(self, prompt, *, system_prompt="", temperature=0.7, max_tokens=2048, **kw) -> str:
+        return my_api.call(prompt)
+
+    async def generate_structured(self, prompt, schema, *, system_prompt="", temperature=0.3, **kw):
+        data = json.loads(my_api.call(prompt))
+        return schema(**data)
+
+# Use it
+result = await run_pipeline(product, store_context, llm_client=MyCustomLLM())
 ```
 
 ## Project Structure

@@ -1,0 +1,45 @@
+[
+  {
+    "id": "SKU-001",
+    "product-name": "Samsung Galaxy S24 Ultra 256GB",
+    "brand": "Samsung",
+    "category": "Smartphones",
+    "sku": "SGS24U-256-BLK",
+    "price": "1199.99",
+    "color": "Titanium Black"
+  },
+  {
+    "id": "SKU-002",
+    "product-name": "Nike Air Max 90 Essential",
+    "brand": "Nike",
+    "category": "Footwear",
+    "sku": "NAM90-WHT-42",
+    "price": "139.99",
+    "color": "White"
+  },
+  {
+    "id": "SKU-003",
+    "product-name": "Dyson V15 Detect Absolute",
+    "brand": "Dyson",
+    "category": "Home Appliances",
+    "sku": "DYS-V15-ABS",
+    "price": "749.99"
+  },
+  {
+    "id": "SKU-004",
+    "product-name": "LEGO Technic Ferrari Daytona SP3",
+    "brand": "LEGO",
+    "category": "Toys & Games",
+    "sku": "LEGO-42143",
+    "price": "399.99"
+  },
+  {
+    "id": "SKU-005",
+    "product-name": "Sony WH-1000XM5 Wireless Headphones",
+    "brand": "Sony",
+    "category": "Electronics",
+    "sku": "SONY-WH1000XM5-BLK",
+    "price": "349.99",
+    "color": "Black"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "store_id": "madrid_001",
+    "store_name": "Tech Madrid Centro",
+    "city": "Madrid",
+    "country_code": "ES",
+    "country_name": "Spain",
+    "language": "es",
+    "language_name": "Spanish",
+    "timezone": "Europe/Madrid"
+  },
+  {
+    "store_id": "london_001",
+    "store_name": "Shoreditch Store",
+    "city": "London",
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "language": "en",
+    "language_name": "English",
+    "timezone": "Europe/London"
+  },
+  {
+    "store_id": "lisbon_001",
+    "store_name": "Chiado Digital",
+    "city": "Lisbon",
+    "country_code": "PT",
+    "country_name": "Portugal",
+    "language": "pt",
+    "language_name": "Portuguese",
+    "timezone": "Europe/Lisbon"
+  }
+]
