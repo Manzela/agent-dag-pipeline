@@ -85,8 +85,6 @@ class StoreContext(BaseModel):
     latitude: str = ""
     longitude: str = ""
 
-    _entry_hash: int | None = None
-
     def is_frozen(self) -> bool:
         """Verify that the context has not been mutated since creation."""
         return True  # Pydantic frozen=True enforces this at the framework level
