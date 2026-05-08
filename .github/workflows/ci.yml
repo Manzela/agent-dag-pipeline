@@ -1,0 +1,61 @@
+name: CI — Agent DAG Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint-and-type-check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Lint with ruff
+        run: ruff check agent_dag/ tests/
+
+      - name: Type check with mypy
+        run: mypy agent_dag/ --ignore-missing-imports
+        continue-on-error: true
+
+      - name: Run tests
+        run: pytest tests/ -v --tb=short
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for proprietary leaks
+        run: |
+          echo "=== Scanning for proprietary identifiers ==="
+          ! grep -rni "tng.shopper\|tng-shopper\|aeon\|lacasa\|kinde\|jira.*token\|service.account.*json" \
+            --include="*.py" --include="*.md" --include="*.yml" --include="*.yaml" \
+            agent_dag/ tests/ docs/ || { echo "PROPRIETARY LEAK DETECTED"; exit 1; }
+          echo "✅ No proprietary leaks found"
+
+      - name: Check for hardcoded secrets
+        run: |
+          echo "=== Scanning for hardcoded secrets ==="
+          ! grep -rniE "(AIza[A-Za-z0-9_-]{35}|sk-[A-Za-z0-9]{48}|ghp_[A-Za-z0-9]{36})" \
+            --include="*.py" --include="*.md" \
+            agent_dag/ tests/ docs/ || { echo "SECRET DETECTED"; exit 1; }
+          echo "✅ No hardcoded secrets found"

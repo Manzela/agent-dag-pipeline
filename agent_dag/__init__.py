@@ -1,0 +1,27 @@
+"""
+Agent DAG Pipeline — Autonomous Multi-Agent Orchestration Framework.
+
+A production-grade 7-node Directed Acyclic Graph (DAG) for autonomous
+content generation with:
+
+    - Fail-closed safety guarantees at every node boundary
+    - Dual-layer architecture: deterministic gates + probabilistic agents
+    - O-R-A-V semantic evaluation with multi-dimensional scoring
+    - DEMAS JIT audit framework with Provenance Matrix
+    - Self-improving RL data flywheel with 3-tier dataset curation
+    - DPO preference pair generation for continuous alignment
+
+Architecture:
+    Phase 1 (Parallel):   Node 1 (Context) | Node 2 (Normalizer)
+    Phase 2 (Sequential): Node 3 → Node 4 → Node 5 → Node 6 → Node 7
+
+Each node implements the Gate-Agent pattern:
+    1. DETERMINISTIC GATE fires first (zero-LLM, O(1), hard pass/fail)
+    2. PROBABILISTIC AGENT fires only if gate passes (LLM-powered)
+
+See: docs/architecture.md for the full topology diagram.
+"""
+
+from .__version__ import __version__
+
+__all__ = ["__version__"]
