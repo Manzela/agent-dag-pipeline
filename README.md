@@ -5,6 +5,8 @@
 [![CI](https://github.com/Manzela/agent-dag-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Manzela/agent-dag-pipeline/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Google ADK](https://img.shields.io/badge/Google_ADK-Native-4285F4?logo=google)](https://google.github.io/adk-docs/)
+[![Vertex AI](https://img.shields.io/badge/Vertex_AI-Deployable-34A853?logo=googlecloud)](https://cloud.google.com/vertex-ai)
 [![Observatory](https://img.shields.io/badge/Live_Demo-Pipeline_Observatory-0A84FF)](https://manzela.github.io/pipeline-observatory/)
 
 ---
@@ -101,7 +103,7 @@ cd agent-dag-pipeline
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
-# Test (36 tests, 0.03s)
+# Test (61 tests, 0.04s)
 pytest tests/ -v
 ```
 
@@ -135,6 +137,38 @@ python -m agent_dag run \
 
 **Output:** `output/products_per_location.json` — all results grouped by store location.
 
+### Google ADK Integration (GCP-Native)
+
+The pipeline includes a first-class **Google ADK integration layer** that enables
+deployment to Vertex AI Agent Engine:
+
+```bash
+# Install ADK dependencies
+pip install -e ".[adk]"
+
+# Run via ADK dev server (interactive web UI)
+adk run agent.py
+adk web agent.py
+
+# Evaluate with golden dataset
+adk eval agent.py --eval-set examples/eval/golden_set.json
+
+# Deploy to Vertex AI Agent Engine
+export GOOGLE_GENAI_USE_VERTEXAI=1
+adk deploy agent.py --project $PROJECT_ID --region us-central1
+```
+
+The ADK layer wraps each node as a `GateAgent(BaseAgent)` with:
+- Native `before_agent_callback` / `after_agent_callback` lifecycle hooks
+- `SequentialAgent` + `ParallelAgent` orchestration (matching the DAG topology)
+- `SessionService` for state persistence (in-memory or Vertex AI managed)
+- Built-in OpenTelemetry instrumentation
+- Model Armor guardrails integration
+- A2A Agent Card for protocol-based discovery
+
+> **Note:** The standalone CLI (`python -m agent_dag run`) remains fully functional
+> without ADK installed. The ADK layer is additive, not a replacement.
+
 ### LLM Client Protocol
 
 Implement your own provider by satisfying the `LLMClient` protocol:
@@ -167,6 +201,17 @@ agent_dag/
 │   ├── node5_content_generator.py     # Content generation — template gate + LoRA agent
 │   ├── node6_quality_validator.py     # O-R-A-V evaluation — format gate + consensus agent
 │   └── node7_metadata_extractor.py    # Vectorization — dimension gate + embedding agent
+├── adk/                               # Google ADK integration layer
+│   ├── gate_agent.py                  # GateAgent(BaseAgent) — ADK-native Gate-Agent ABC
+│   ├── pipeline.py                    # SequentialAgent + ParallelAgent composition
+│   ├── runner.py                      # ADK Runner with SessionService
+│   ├── callbacks.py                   # Lifecycle hooks (integrity, flywheel, telemetry)
+│   ├── tools.py                       # Tool callbacks (guardrails, sanitization)
+│   ├── eval.py                        # Trajectory + O-R-A-V evaluation
+│   ├── guardrails.py                  # Google Cloud Model Armor integration
+│   ├── agent_card.py                  # A2A protocol Agent Card
+│   ├── deploy.py                      # Vertex AI Agent Engine deployment
+│   └── nodes/                         # 7 GateAgent subclasses wrapping existing nodes
 ├── validators/
 │   ├── base_evaluator.py              # DEMAS framework + Provenance Matrix
 │   └── evaluators/                    # Pluggable evaluator implementations
@@ -180,9 +225,12 @@ agent_dag/
 │   ├── data_contracts.py              # Pydantic models (all frozen)
 │   └── observability.py               # Structured tracing + score emission
 │
+agent.py                               # ADK entry point (adk run/web/deploy)
 tests/
-├── conftest.py                        # Shared test fixtures
-└── test_pipeline.py                   # 36 tests covering all critical paths
+├── test_pipeline.py                   # 36 core tests
+├── test_adk_gate_agent.py             # 8 GateAgent tests
+├── test_adk_eval.py                   # 7 evaluation tests
+└── test_adk_tools.py                  # 8 guardrail tests
 ```
 
 ## Model Evolution
@@ -202,8 +250,9 @@ tests/
 ## Roadmap
 
 See [ROADMAP.md](ROADMAP.md) for the full development roadmap, including:
-- **v3.1** — Production Langfuse integration, pluggable evaluators, S-LoRA hot-reload
-- **v3.2** — Multi-model consensus scoring, active learning, drift detection
+- **v3.1** — Google ADK native integration, Vertex AI deployment, Model Armor guardrails
+- **v3.2** — Production Langfuse integration, pluggable evaluators, S-LoRA hot-reload
+- **v3.3** — Multi-model consensus scoring, active learning, drift detection
 - **v4.0** — Fully autonomous self-improvement with closed-loop retraining
 
 ## Contributing

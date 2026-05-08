@@ -1,0 +1,78 @@
+[
+  {
+    "name": "Full Pipeline — Samsung Galaxy S24 Ultra in Madrid",
+    "input": {
+      "product": {
+        "name": "Samsung Galaxy S24 Ultra 256GB Titanium Black",
+        "category": "Electronics > Smartphones",
+        "brand": "Samsung",
+        "sku": "SM-S928B-256-BLK"
+      },
+      "store_context": {
+        "store_id": "madrid_001",
+        "country_code": "ES",
+        "city": "Madrid",
+        "language": "es"
+      }
+    },
+    "expected_trajectory": [
+      "context_researcher",
+      "input_normalizer",
+      "synonym_generator",
+      "demand_gatekeeper",
+      "content_generator",
+      "quality_validator",
+      "metadata_extractor"
+    ],
+    "assertions": {
+      "quality_validator:result.decision": "PASS",
+      "orav_min": 0.7
+    }
+  },
+  {
+    "name": "Demand Gate Rejection — Zero Volume Product",
+    "input": {
+      "product": {
+        "name": "Obscure Widget XZ-9000",
+        "category": "Misc > Unknown",
+        "brand": "NoName"
+      },
+      "store_context": {
+        "store_id": "test_001",
+        "country_code": "US",
+        "city": "Test City",
+        "language": "en"
+      }
+    },
+    "expected_trajectory": [
+      "context_researcher",
+      "input_normalizer",
+      "synonym_generator",
+      "demand_gatekeeper"
+    ],
+    "assertions": {
+      "demand_gatekeeper:gate_decision": "REJECT"
+    }
+  },
+  {
+    "name": "Invalid Locale — Schema Rejection",
+    "input": {
+      "product": {
+        "name": "Nike Air Max 90",
+        "category": "Fashion > Shoes"
+      },
+      "store_context": {
+        "store_id": "invalid_001",
+        "country_code": "XX",
+        "city": "",
+        "language": ""
+      }
+    },
+    "expected_trajectory": [
+      "context_researcher"
+    ],
+    "assertions": {
+      "context_researcher:gate_decision": "REJECT"
+    }
+  }
+]
