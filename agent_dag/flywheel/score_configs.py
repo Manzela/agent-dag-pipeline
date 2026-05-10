@@ -20,13 +20,13 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
-from enum import Enum
-from typing import Any, Optional
+from enum import StrEnum
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
 
-class ScoreDataType(str, Enum):
+class ScoreDataType(StrEnum):
     """Data type for a score configuration."""
     NUMERIC = "NUMERIC"
     BOOLEAN = "BOOLEAN"
@@ -225,8 +225,8 @@ def get_config_id(metric_name: str) -> str:
 
 def ensure_score_configs(
     *,
-    observability_client: Optional[Any] = None,
-    leader_election: Optional[Any] = None,
+    observability_client: Any | None = None,
+    leader_election: Any | None = None,
 ) -> int:
     """Register all score configs with the observability backend.
 

@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing import Any
 
-from ..gate_agent import GateAgent, GateDecision, GateResult
 from ...nodes.node6_quality_validator import gate_format_compliance
 from ...shared.data_contracts import ContentBlockOutput, ORAVDecision
+from ..gate_agent import GateAgent, GateDecision, GateResult
 
 
 class QualityValidator(GateAgent):

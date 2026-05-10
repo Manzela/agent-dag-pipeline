@@ -19,24 +19,23 @@ Design Principles:
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Optional
+from enum import StrEnum
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
-
 
 # ════════════════════════════════════════════════════════════════════════════
 # ENUMS
 # ════════════════════════════════════════════════════════════════════════════
 
-class GateDecision(str, Enum):
+class GateDecision(StrEnum):
     """Decision outcomes for demand gatekeeper (Node 4)."""
     PASS = "PASS"
     REJECT = "REJECT"
     DEFER = "DEFER"
 
 
-class ORAVDecision(str, Enum):
+class ORAVDecision(StrEnum):
     """Decision outcomes for O-R-A-V quality validator (Node 6)."""
     PASS = "PASS"
     RETRY = "RETRY"
@@ -255,9 +254,9 @@ class ContextPayload(BaseModel):
 
     # ── Store context ──
     parent_fingerprint: str = ""
-    store_context: Optional[StoreContext] = None
+    store_context: StoreContext | None = None
     city_dna: dict[str, Any] = Field(default_factory=dict)
-    linguistic: Optional[LinguisticContext] = None
+    linguistic: LinguisticContext | None = None
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -273,8 +272,8 @@ class PipelineResult:
     """
     success: bool
     product_id: str
-    content: Optional[ContentBlockOutput] = None
-    metadata: Optional[dict[str, Any]] = None
+    content: ContentBlockOutput | None = None
+    metadata: dict[str, Any] | None = None
     failure_node: str = ""
     failure_reason: str = ""
     duration_ms: float = 0.0

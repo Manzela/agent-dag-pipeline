@@ -26,9 +26,9 @@ Output Structure::
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -42,8 +42,8 @@ class ProductResult(BaseModel):
     duration_ms: float = 0.0
     failure_node: str = ""
     failure_reason: str = ""
-    content: Optional[dict[str, Any]] = None
-    metadata: Optional[dict[str, Any]] = None
+    content: dict[str, Any] | None = None
+    metadata: dict[str, Any] | None = None
 
 
 class LocationOutput(BaseModel):
@@ -78,7 +78,7 @@ class PipelineRunOutput(BaseModel):
 
     pipeline_version: str = ""
     run_timestamp: str = Field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat(),
+        default_factory=lambda: datetime.now(UTC).isoformat(),
     )
     config_used: dict[str, Any] = Field(default_factory=dict)
     summary: RunSummary = Field(default_factory=RunSummary)

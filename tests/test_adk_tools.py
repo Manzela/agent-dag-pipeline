@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
-import pytest
 from agent_dag.adk.tools import (
-    SACRED_LABELS,
-    before_tool_guardrail,
-    after_tool_sanitizer,
     MAX_TOOL_RESPONSE_CHARS,
+    SACRED_LABELS,
+    after_tool_sanitizer,
+    before_tool_guardrail,
 )
 
 

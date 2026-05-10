@@ -23,7 +23,7 @@ Architecture (Gate-Agent Pattern):
 from __future__ import annotations
 
 import logging
-from typing import Any, Optional
+from typing import Any
 
 from ..shared.data_contracts import ContentBlockOutput
 
@@ -104,7 +104,7 @@ async def run_node5(state: dict[str, Any]) -> dict[str, Any]:
     """
     # ── Extract context from upstream nodes ──
     node2_result = state.get("node2_result", {})
-    node4_result = state.get("node4_result", {})
+    state.get("node4_result", {})
     store_context = state.get("store_context")
     llm_client = state.get("llm_client")
 

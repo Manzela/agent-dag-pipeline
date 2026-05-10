@@ -34,7 +34,7 @@ import json
 import logging
 import os
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -110,7 +110,7 @@ class PipelineConfig(BaseModel):
     output_dir: str = Field(default="./output", description="Directory for output files")
 
 
-def load_config(config_path: Optional[str] = None) -> PipelineConfig:
+def load_config(config_path: str | None = None) -> PipelineConfig:
     """Load pipeline configuration from file and/or environment.
 
     Parameters

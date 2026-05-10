@@ -25,7 +25,16 @@ Topology::
 from __future__ import annotations
 
 import logging
-from typing import Any, Callable, Optional
+from collections.abc import Callable
+from typing import Any
+
+from .nodes.content_generator import ContentGenerator
+from .nodes.context_researcher import ContextResearcher
+from .nodes.demand_gatekeeper import DemandGatekeeper
+from .nodes.input_normalizer import InputNormalizer
+from .nodes.metadata_extractor import MetadataExtractor
+from .nodes.quality_validator import QualityValidator
+from .nodes.synonym_generator import SynonymGenerator
 
 logger = logging.getLogger(__name__)
 
@@ -37,19 +46,11 @@ try:
 except ImportError:
     _ADK_AVAILABLE = False
 
-from .nodes.content_generator import ContentGenerator
-from .nodes.context_researcher import ContextResearcher
-from .nodes.demand_gatekeeper import DemandGatekeeper
-from .nodes.input_normalizer import InputNormalizer
-from .nodes.metadata_extractor import MetadataExtractor
-from .nodes.quality_validator import QualityValidator
-from .nodes.synonym_generator import SynonymGenerator
-
 
 def build_pipeline(
     *,
-    before_agent: Optional[Callable[..., Any]] = None,
-    after_agent: Optional[Callable[..., Any]] = None,
+    before_agent: Callable[..., Any] | None = None,
+    after_agent: Callable[..., Any] | None = None,
 ) -> Any:
     """Build the 7-node content pipeline using ADK workflow agents.
 

@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing import Any
 
-from ..gate_agent import GateAgent, GateDecision, GateResult
 from ...nodes.node4_demand_gatekeeper import gate_threshold_comparator
 from ...shared.data_contracts import GateDecision as ContractGateDecision
+from ..gate_agent import GateAgent, GateDecision, GateResult
 
 
 class DemandGatekeeper(GateAgent):

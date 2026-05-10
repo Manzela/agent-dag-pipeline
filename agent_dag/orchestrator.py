@@ -27,17 +27,14 @@ Gate-Agent Pattern:
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
 import time
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
-from typing import Any, Optional
+from datetime import UTC, datetime
+from enum import StrEnum
+from typing import Any
 
 from .shared.data_contracts import (
-    ContentBlockOutput,
-    ContextPayload,
     GateDecision,
     PipelineResult,
     StoreContext,
@@ -61,7 +58,7 @@ CAUSAL_TRACES: dict[int, str] = {
 }
 
 
-class FailureReason(str, Enum):
+class FailureReason(StrEnum):
     """Enumeration of all pipeline exit reasons for auditability."""
     NODE_FAILURE = "NODE_FAILURE"
     INTEGRITY_VIOLATION = "STORE_INTEGRITY_VIOLATION"
@@ -85,7 +82,7 @@ class FailureRecord:
     failure_reason: FailureReason
     error_message: str
     retry_eligible: bool
-    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
     trace_id: str = ""
     causal_trace: str = ""
 
@@ -99,7 +96,7 @@ def record_failure(
     *,
     retry_eligible: bool = True,
     trace_id: str = "",
-    failure_store: Optional[Any] = None,
+    failure_store: Any | None = None,
 ) -> FailureRecord:
     """Record a pipeline exit to the persistent failure store.
 
@@ -199,10 +196,10 @@ async def run_pipeline(
     product: dict[str, Any],
     store_context: StoreContext,
     *,
-    llm_client: Optional[Any] = None,
-    node_registry: Optional[dict[str, Any]] = None,
-    failure_store: Optional[Any] = None,
-    flywheel: Optional[Any] = None,
+    llm_client: Any | None = None,
+    node_registry: dict[str, Any] | None = None,
+    failure_store: Any | None = None,
+    flywheel: Any | None = None,
     trace_id: str = "",
 ) -> PipelineResult:
     """Execute the complete 7-node DAG pipeline for a single product.
@@ -283,7 +280,7 @@ async def run_pipeline(
             nodes["node2"](product, store_context),
         )
     except Exception as exc:
-        failure = record_failure(
+        record_failure(
             product_id, store_context.store_id,
             "PHASE_1_PARALLEL", FailureReason.NODE_FAILURE,
             f"Phase 1 parallel execution failed: {exc}",

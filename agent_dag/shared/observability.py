@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import logging
 from contextvars import ContextVar
-from typing import Any, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -58,8 +58,8 @@ def score_generation(
     *,
     data_type: str = "NUMERIC",
     config_id: str = "",
-    metadata: Optional[dict[str, Any]] = None,
-    observability_client: Optional[Any] = None,
+    metadata: dict[str, Any] | None = None,
+    observability_client: Any | None = None,
 ) -> None:
     """Emit a score event for observability.
 

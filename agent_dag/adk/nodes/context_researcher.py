@@ -4,11 +4,11 @@ from __future__ import annotations
 
 from typing import Any
 
-from ..gate_agent import GateAgent, GateDecision, GateResult
 from ...nodes.node1_context_researcher import (
     agent_cultural_context,
     gate_locale_resolver,
 )
+from ..gate_agent import GateAgent, GateDecision, GateResult
 
 
 class ContextResearcher(GateAgent):

@@ -22,7 +22,8 @@ Requires::
 from __future__ import annotations
 
 import logging
-from typing import Any, Callable, Optional
+from collections.abc import Callable
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -118,11 +119,11 @@ def create_output_armor_callback(
         try:
             from google.cloud import modelarmor_v1
         except ImportError:
-            return None
+            return
 
         content = callback_context.state.get("content_generator:result", {})
         if not content:
-            return None
+            return
 
         import json
 
@@ -147,6 +148,6 @@ def create_output_armor_callback(
         except Exception as exc:
             logger.debug("Model Armor output check failed (non-fatal): %s", exc)
 
-        return None
+        return
 
     return output_guardrail

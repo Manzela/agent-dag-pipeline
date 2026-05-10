@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import logging
 from abc import ABC, abstractmethod
-from typing import Any, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +33,7 @@ class BaseEvaluator(ABC):
         content: str,
         provenance: dict[str, Any],
         *,
-        llm_client: Optional[Any] = None,
+        llm_client: Any | None = None,
     ) -> dict[str, Any]:
         """Evaluate a content block against its provenance context.
 
@@ -113,7 +113,7 @@ class EvaluatorRegistry:
         self._evaluators[name] = evaluator
         logger.info("Registered evaluator: %s", name)
 
-    def get(self, name: str) -> Optional[BaseEvaluator]:
+    def get(self, name: str) -> BaseEvaluator | None:
         """Get a registered evaluator by name."""
         return self._evaluators.get(name)
 

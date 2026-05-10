@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from typing import Any
 
-from ..gate_agent import GateAgent, GateDecision, GateResult
 from ...nodes.node5_content_generator import (
     gate_template_selector,
     validate_block_constraints,
 )
 from ...shared.data_contracts import ContentBlockOutput
+from ..gate_agent import GateAgent, GateDecision, GateResult
 
 
 class ContentGenerator(GateAgent):
@@ -33,5 +33,5 @@ class ContentGenerator(GateAgent):
 
     async def agent(self, state: dict[str, Any], ctx: Any) -> dict[str, Any]:
         content = ContentBlockOutput()
-        violations = validate_block_constraints(content)
+        validate_block_constraints(content)
         return content.model_dump()

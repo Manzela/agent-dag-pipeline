@@ -29,7 +29,7 @@ from __future__ import annotations
 import json
 import logging
 import os
-from typing import Any, Optional, Protocol, runtime_checkable
+from typing import Any, Protocol, runtime_checkable
 
 from pydantic import BaseModel
 
@@ -169,7 +169,7 @@ class MockLLMClient:
         mock_data: dict[str, Any] = {}
         for field_name, field_info in schema.model_fields.items():
             annotation = field_info.annotation
-            if annotation is str or annotation == Optional[str]:
+            if annotation is str or annotation == str | None:
                 mock_data[field_name] = f"Mock {field_name.replace('_', ' ')}"
             elif annotation is int:
                 mock_data[field_name] = 42
@@ -209,8 +209,8 @@ class OpenAILLMClient:
         self,
         model: str = "gpt-4o-mini",
         *,
-        api_key: Optional[str] = None,
-        base_url: Optional[str] = None,
+        api_key: str | None = None,
+        base_url: str | None = None,
     ) -> None:
         try:
             from openai import AsyncOpenAI
@@ -293,7 +293,7 @@ class GoogleGenAILLMClient:
         self,
         model: str = "gemini-2.5-flash-lite",
         *,
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
     ) -> None:
         try:
             from google import genai
@@ -366,9 +366,9 @@ class GoogleGenAILLMClient:
 def create_llm_client(
     provider: str = "mock",
     *,
-    model: Optional[str] = None,
-    api_key: Optional[str] = None,
-    base_url: Optional[str] = None,
+    model: str | None = None,
+    api_key: str | None = None,
+    base_url: str | None = None,
 ) -> LLMClient:
     """Factory function to create an LLM client from a provider name.
 

@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import logging
 import re
-from typing import Any, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +35,7 @@ def before_tool_guardrail(
     tool: Any,
     args: dict[str, Any],
     tool_context: Any,
-) -> Optional[dict[str, Any]]:
+) -> dict[str, Any] | None:
     """Intercept tool calls for safety checks.
 
     Checks:

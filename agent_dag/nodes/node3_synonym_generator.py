@@ -21,7 +21,7 @@ from __future__ import annotations
 
 import hashlib
 import logging
-from typing import Any, Optional
+from typing import Any
 
 from ..shared.data_contracts import SynonymOutput
 
@@ -47,7 +47,7 @@ async def agent_synonym_generation(
     target_language: str,
     country_code: str,
     *,
-    llm_client: Optional[Any] = None,
+    llm_client: Any | None = None,
 ) -> list[str]:
     """Generate locale-aware synonym expansions using LLM."""
     # In production, the LLM generates locale-specific synonyms

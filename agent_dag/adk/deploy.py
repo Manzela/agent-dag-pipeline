@@ -28,7 +28,7 @@ Requires::
 from __future__ import annotations
 
 import logging
-from typing import Any, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +39,7 @@ def deploy_to_vertex(
     region: str = "us-central1",
     display_name: str = "agent-dag-pipeline",
     enable_tracing: bool = True,
-    requirements: Optional[list[str]] = None,
+    requirements: list[str] | None = None,
 ) -> Any:
     """Deploy the pipeline to Vertex AI Agent Engine.
 

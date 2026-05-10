@@ -40,21 +40,21 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
-from typing import Any, Optional
+from datetime import UTC, datetime
+from enum import StrEnum
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
 
-class DatasetTier(str, Enum):
+class DatasetTier(StrEnum):
     """3-tier dataset curation hierarchy."""
     PRODUCTION_BASELINE = "production-baseline"
     QUALITY_APPROVED = "quality-approved"
     FAILURE_CASES = "failure-cases"
 
 
-class CurationDecision(str, Enum):
+class CurationDecision(StrEnum):
     """Curation routing decision based on scoring thresholds."""
     APPROVE = "APPROVE"        # → quality-approved tier
     BASELINE_ONLY = "BASELINE"  # → stays in production-baseline
@@ -110,7 +110,7 @@ class DatasetItem:
     tier: DatasetTier = DatasetTier.PRODUCTION_BASELINE
     curation_decision: CurationDecision = CurationDecision.BASELINE_ONLY
     timestamp: str = field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+        default_factory=lambda: datetime.now(UTC).isoformat()
     )
     pipeline_version: str = ""
     model_version: str = ""
@@ -157,11 +157,10 @@ def route_to_tier(
     orav_score = item.scores.get("orav_quality", 0.0)
     demas_pass = item.scores.get("demas_jit_verdict", "FAIL") == "PASS"
 
-    if orav_score >= thresholds.approve_min_orav:
-        if not thresholds.approve_min_demas or demas_pass:
-            item.tier = DatasetTier.QUALITY_APPROVED
-            item.curation_decision = CurationDecision.APPROVE
-            return item
+    if orav_score >= thresholds.approve_min_orav and (not thresholds.approve_min_demas or demas_pass):
+        item.tier = DatasetTier.QUALITY_APPROVED
+        item.curation_decision = CurationDecision.APPROVE
+        return item
 
     if orav_score < thresholds.reject_max_orav or not demas_pass:
         item.tier = DatasetTier.FAILURE_CASES
@@ -214,7 +213,7 @@ class DataFlywheel:
     def __init__(
         self,
         *,
-        dataset_store: Optional[Any] = None,
+        dataset_store: Any | None = None,
         thresholds: CurationThresholds = DEFAULT_THRESHOLDS,
     ) -> None:
         self._store = dataset_store
@@ -249,10 +248,7 @@ class DataFlywheel:
         }
 
         tenant_id = state.get("store_context", {})
-        if hasattr(tenant_id, "store_id"):
-            tenant_id = tenant_id.store_id
-        else:
-            tenant_id = str(tenant_id.get("store_id", "unknown"))
+        tenant_id = tenant_id.store_id if hasattr(tenant_id, "store_id") else str(tenant_id.get("store_id", "unknown"))
 
         for prompt_id, prompt_meta in PROMPT_REGISTRY.items():
             item = DatasetItem(

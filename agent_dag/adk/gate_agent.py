@@ -24,8 +24,9 @@ import enum
 import logging
 import time
 from abc import abstractmethod
+from collections.abc import AsyncGenerator
 from dataclasses import dataclass
-from typing import Any, AsyncGenerator, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +35,6 @@ try:
     from google.adk.agents import BaseAgent
     from google.adk.agents.invocation_context import InvocationContext
     from google.adk.events.event import Event
-    from google.adk.events.event_actions import EventActions
     from google.genai.types import Content, Part
 
     _ADK_AVAILABLE = True

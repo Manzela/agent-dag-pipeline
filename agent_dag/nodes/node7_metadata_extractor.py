@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import logging
 import math
-from typing import Any, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +48,7 @@ def gate_embedding_dimension_check(
 
 async def run_node7(state: dict[str, Any]) -> dict[str, Any]:
     """Execute Node 7: Metadata Extractor with Gate-Agent pattern."""
-    content = state.get("node6_result", {}).get("content", {})
+    state.get("node6_result", {}).get("content", {})
 
     # In production, generates embedding vectors from validated content
     return {

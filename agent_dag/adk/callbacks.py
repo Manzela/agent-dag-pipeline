@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import logging
 import time
-from typing import Any, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +79,7 @@ def flywheel_ingest_callback(callback_context: Any) -> None:
         state.get("flywheel:tier", "unknown"),
         state.get("app:pipeline_duration_ms", 0),
     )
-    return None
+    return
 
 
 def telemetry_callback(callback_context: Any) -> None:
@@ -111,4 +111,4 @@ def telemetry_callback(callback_context: Any) -> None:
                 duration,
             )
 
-    return None
+    return

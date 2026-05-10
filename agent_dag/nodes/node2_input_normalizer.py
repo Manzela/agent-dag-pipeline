@@ -22,7 +22,7 @@ from __future__ import annotations
 
 import logging
 import re
-from typing import Any, Optional
+from typing import Any
 
 from ..shared.data_contracts import NormalizerOutput, StoreContext
 
@@ -94,7 +94,7 @@ async def agent_semantic_extraction(
     product: dict[str, Any],
     store_context: StoreContext,
     *,
-    llm_client: Optional[Any] = None,
+    llm_client: Any | None = None,
 ) -> NormalizerOutput:
     """Extract semantic category and lean product name using LLM.
 
@@ -136,7 +136,7 @@ async def run_node2(
     product: dict[str, Any],
     store_context: StoreContext,
     *,
-    llm_client: Optional[Any] = None,
+    llm_client: Any | None = None,
 ) -> NormalizerOutput:
     """Execute Node 2: Input Normalizer.
 

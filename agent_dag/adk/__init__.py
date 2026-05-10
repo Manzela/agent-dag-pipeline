@@ -16,10 +16,10 @@ Usage (Standalone — unchanged)::
     python -m agent_dag run --products data/products.json --stores data/stores.json
 """
 
+from .callbacks import flywheel_ingest_callback, integrity_check_callback
 from .gate_agent import GateAgent, GateDecision, GateResult
 from .pipeline import build_pipeline, root_agent
 from .runner import create_runner
-from .callbacks import integrity_check_callback, flywheel_ingest_callback
 
 __all__ = [
     "GateAgent",

@@ -19,16 +19,16 @@ Usage::
 from __future__ import annotations
 
 import logging
-from typing import Any, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
 
 def create_runner(
     *,
-    session_service: Optional[Any] = None,
+    session_service: Any | None = None,
     app_name: str = "agent_dag_pipeline",
-    agent: Optional[Any] = None,
+    agent: Any | None = None,
 ) -> Any:
     """Create an ADK Runner for the pipeline.
 

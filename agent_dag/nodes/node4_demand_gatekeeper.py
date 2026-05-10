@@ -26,9 +26,9 @@ Gate Decisions:
 from __future__ import annotations
 
 import logging
-from typing import Any, Optional
+from typing import Any
 
-from ..shared.data_contracts import GateDecision, IntentLockOutput
+from ..shared.data_contracts import GateDecision
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +57,7 @@ async def run_node4(state: dict[str, Any]) -> dict[str, Any]:
     """Execute Node 4: Demand Gatekeeper."""
     node3_result = state.get("node3_result", {})
     trigger_term = node3_result.get("lean_product_name", "")
-    synonyms = node3_result.get("synonyms", [])
+    node3_result.get("synonyms", [])
 
     # In production, search volume is looked up from a data store
     search_volume = 0  # Placeholder — injected from demand data source

@@ -25,14 +25,14 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
-from typing import Any, Optional
+from datetime import UTC, datetime
+from enum import StrEnum
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
 
-class MutationType(str, Enum):
+class MutationType(StrEnum):
     """Types of prompt mutations."""
     APPEND_CONSTRAINT = "APPEND_CONSTRAINT"
     BOOST_EXAMPLE = "BOOST_EXAMPLE"
@@ -68,7 +68,7 @@ class PromptMutation:
     trigger_score: float = 0.0
     trigger_trace_id: str = ""
     timestamp: str = field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+        default_factory=lambda: datetime.now(UTC).isoformat()
     )
 
     def to_dict(self) -> dict[str, Any]:
@@ -130,8 +130,8 @@ class PromptMutator:
     def __init__(
         self,
         *,
-        prompt_cache: Optional[Any] = None,
-        mutation_history: Optional[Any] = None,
+        prompt_cache: Any | None = None,
+        mutation_history: Any | None = None,
         max_constraints_per_prompt: int = 5,
     ) -> None:
         self._cache = prompt_cache

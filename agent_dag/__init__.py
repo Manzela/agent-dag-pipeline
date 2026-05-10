@@ -38,7 +38,6 @@ from .shared.data_contracts import (
     StoreContext,
     SynonymOutput,
 )
-
 from .shared.llm_protocol import LLMClient, MockLLMClient, create_llm_client
 
 __all__ = [

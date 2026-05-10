@@ -41,7 +41,9 @@ def clean_content() -> ContentBlockOutput:
         short_description="Premium smartphone with advanced AI features.",
         store_welcome_line="Discover the Samsung Galaxy S24 Ultra at our Madrid store.",
         meta_title="Samsung Galaxy S24 Ultra Madrid",
-        meta_description="Explore the Samsung Galaxy S24 Ultra with advanced AI, 200MP camera, and S Pen at our Madrid location.",
+        meta_description=(
+            "Explore the Samsung Galaxy S24 Ultra with advanced AI, 200MP camera, and S Pen at our Madrid location."
+        ),
         image_alt_tag="Samsung Galaxy S24 Ultra smartphone in titanium black",
         key_features=["200MP camera", "S Pen included", "Titanium frame"],
         faq_items=[{"question": "Does it include S Pen?", "answer": "Yes, the S24 Ultra includes the S Pen built in."}],

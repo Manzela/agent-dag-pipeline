@@ -121,7 +121,7 @@ async def run_batch(args: argparse.Namespace) -> int:
     print()
 
     # ── Create LLM client ──
-    llm_client = create_llm_client(
+    create_llm_client(
         llm_provider,
         model=llm_model if llm_model else None,
         api_key=config.llm.resolve_api_key(),

@@ -25,8 +25,9 @@ Margin Maximization:
 from __future__ import annotations
 
 import logging
+from collections.abc import Sequence
 from dataclasses import dataclass, field
-from typing import Any, Optional, Sequence
+from typing import Any
 
 logger = logging.getLogger(__name__)
 

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
 from agent_dag.adk.eval import (
     EXPECTED_TRAJECTORY_DEMAND_REJECT,
     EXPECTED_TRAJECTORY_FULL,

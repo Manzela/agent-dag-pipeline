@@ -4,11 +4,11 @@ from __future__ import annotations
 
 from typing import Any
 
-from ..gate_agent import GateAgent, GateDecision, GateResult
 from ...nodes.node2_input_normalizer import (
     agent_semantic_extraction,
     gate_schema_validator,
 )
+from ..gate_agent import GateAgent, GateDecision, GateResult
 
 
 class InputNormalizer(GateAgent):

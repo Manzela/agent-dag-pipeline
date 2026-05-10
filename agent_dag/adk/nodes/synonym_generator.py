@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from typing import Any
 
-from ..gate_agent import GateAgent, GateDecision, GateResult
 from ...nodes.node3_synonym_generator import (
     agent_synonym_generation,
     gate_dedup_filter,
 )
 from ...shared.data_contracts import SynonymOutput
+from ..gate_agent import GateAgent, GateDecision, GateResult
 
 
 class SynonymGenerator(GateAgent):

@@ -27,7 +27,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Any
 
 from ..shared.data_contracts import StoreContext
 
@@ -99,8 +99,8 @@ class CityDNAProfile:
 async def agent_cultural_context(
     store_context: StoreContext,
     *,
-    llm_client: Optional[Any] = None,
-    cache: Optional[Any] = None,
+    llm_client: Any | None = None,
+    cache: Any | None = None,
 ) -> CityDNAProfile:
     """Enrich the store context with city-level cultural intelligence.
 
@@ -166,8 +166,8 @@ async def run_node1(
     product: dict[str, Any],
     store_context: StoreContext,
     *,
-    llm_client: Optional[Any] = None,
-    cache: Optional[Any] = None,
+    llm_client: Any | None = None,
+    cache: Any | None = None,
 ) -> CityDNAProfile:
     """Execute Node 1: Context Research (City DNA).
 
