@@ -242,10 +242,12 @@ tests/
 | Apr 13–14 | gemini-2.5-flash-lite | 5,595 | Cloud migration |
 | May 7+ | gemini-3.1-flash-lite | 164+ | Current production |
 
-## Live Demo
+## Live Demos
 
+- **[Pipeline Operation Demo (YouTube)](https://youtu.be/czZsPbylC1M)** — Visual proof of the pipeline executing autonomously
+- **[Architecture Deep-Dive (Loom)](https://www.loom.com/share/be8a97a64f80414eae11176843c559bb)** — Mechanistic interpretability and system walk-through
 - **[Pipeline Observatory](https://manzela.github.io/pipeline-observatory/)** — Live execution telemetry
-- **[Architecture Deep View](https://manzela.github.io/pipeline-observatory/architecture.html)** — Mechanistic interpretability
+- **[Architecture Deep View](https://manzela.github.io/pipeline-observatory/architecture.html)** — System topology
 
 ## Roadmap
 
