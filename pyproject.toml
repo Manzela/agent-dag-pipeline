@@ -77,6 +77,9 @@ Issues = "https://github.com/Manzela/agent-dag-pipeline/issues"
 [tool.hatch.version]
 path = "agent_dag/__version__.py"
 
+[tool.hatch.build.targets.wheel]
+packages = ["agent_dag"]
+
 [tool.ruff]
 target-version = "py311"
 line-length = 100
