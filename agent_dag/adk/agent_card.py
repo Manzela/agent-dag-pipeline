@@ -8,7 +8,9 @@ this pipeline via standardized capability declarations.
 
 from __future__ import annotations
 
-AGENT_CARD: dict = {
+from typing import Any
+
+AGENT_CARD: dict[str, Any] = {
     "name": "content_pipeline",
     "description": (
         "7-node autonomous content generation pipeline with O-R-A-V "

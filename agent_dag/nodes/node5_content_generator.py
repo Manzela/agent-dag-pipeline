@@ -158,4 +158,4 @@ async def run_node5(state: dict[str, Any]) -> dict[str, Any]:
     if violations:
         logger.debug("Block constraint violations (non-fatal for stubs): %s", violations)
 
-    return content.model_dump()
+    return dict(content.model_dump())

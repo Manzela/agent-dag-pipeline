@@ -115,4 +115,4 @@ def build_pipeline(
 try:
     root_agent = build_pipeline()
 except ImportError:
-    root_agent = None  # type: ignore[assignment]
+    root_agent = None  # type: ignore[assignment,unused-ignore]

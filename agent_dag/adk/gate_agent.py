@@ -41,10 +41,10 @@ try:
 except ImportError:
     # Fallback: define minimal stubs so the module can be imported
     # without google-adk installed (for type checking, testing, etc.)
-    from pydantic import BaseModel as BaseAgent  # type: ignore[assignment]
+    from pydantic import BaseModel as BaseAgent  # type: ignore[assignment,unused-ignore]
 
-    InvocationContext = Any  # type: ignore[misc,assignment]
-    Event = Any  # type: ignore[misc,assignment]
+    InvocationContext = Any  # type: ignore[misc,assignment,unused-ignore]
+    Event = Any  # type: ignore[misc,assignment,unused-ignore]
     _ADK_AVAILABLE = False
 
 
@@ -65,7 +65,7 @@ class GateResult:
     metadata: dict[str, Any] | None = None
 
 
-class GateAgent(BaseAgent):
+class GateAgent(BaseAgent):  # type: ignore[misc]
     """ADK-native base class for all pipeline nodes.
 
     Implements the Gate-Agent pattern on top of Google ADK's BaseAgent:
