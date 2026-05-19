@@ -4,5 +4,5 @@ contact_links:
     url: https://manzela.github.io/pipeline-observatory/
     about: Interactive visual demo of the pipeline architecture
   - name: Architecture Documentation
-    url: https://manzela.github.io/pipeline-observatory/architecture.html
+    url: https://manzela.github.io/pipeline-observatory/#dag
     about: Mechanistic interpretability and Gate-Agent pattern deep dive
